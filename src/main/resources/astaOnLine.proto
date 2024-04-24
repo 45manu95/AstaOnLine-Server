@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+option java_package = "astaOnlineProto";
+
+message Articolo {
+  int32 id = 1;
+  string nome = 2;
+  string descrizione = 3;
+  float valore_partenza = 4;
+  string data_inizio = 5;
+  string data_fine = 6;
+  bytes immagine = 7;
+}
+
+message Offerta {
+  int32 articolo_id = 1;
+  string cliente_id = 2;
+  float valore_offerta = 3;
+}
+
+message Utente {
+  int32 id = 1;
+  string nome = 2;
+  string cognome = 3;
+  string email = 4;
+  string password = 5;
+}
+
+message MessaggioGenerico {
+  string messaggio = 1;
+}
+
+message Empty {
+}
+
+message Articoli {
+	repeated Articolo articoli = 1;
+}
+
+service AstaService {
+  rpc RegistraUtente (Utente) returns (MessaggioGenerico);
+
+  rpc AccediUtente (Utente) returns (MessaggioGenerico);
+
+  rpc NotificaSuccesso (Empty) returns (MessaggioGenerico);
+
+  rpc VisualizzaArticoliAcquistati (Utente) returns (Articoli);
+
+  rpc VisualizzaArticoliRegistrati (Utente) returns (Articoli);
+
+  rpc InviaOfferta (Offerta) returns (MessaggioGenerico);
+
+  rpc GetArticoliInVendita (Empty) returns (Articoli);
+
+  rpc RiceviNotifiche (Empty) returns (MessaggioGenerico);
+}
+
+
