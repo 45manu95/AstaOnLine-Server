@@ -27,7 +27,7 @@ public class AggiungiProdottoMediator implements Mediator {
    private int hour;
    private int minute;
    private final Integer[] years = new Integer[]{Calendar.getInstance().get(1), Calendar.getInstance().get(1) + 1};
-   private String[] errors = new String[]{"Campo titolo prodotto vuoto", "Campo descrizione prodotto vuoto", "Campo prezzo base prodotto vuoto", "Campo immagine vuoto", "Campo prezzo base prodotto non valido"};
+   private String[] errors = new String[]{"Campo titolo prodotto vuoto", "Campo descrizione prodotto vuoto", "Campo prezzo base prodotto vuoto", "Campo immagine vuoto", "Campo prezzo base prodotto non valido", "Devi aggiungere una data successiva al giorno odierno"};
 
    public void setButton(JButton invioProdotto, JButton selectImage) {
       this.invioProdotto = invioProdotto;
@@ -42,8 +42,8 @@ public class AggiungiProdottoMediator implements Mediator {
       this.day = day + 1;
       this.month = month + 1;
       this.year = this.years[year];
-      this.hour = hour + 1;
-      this.minute = minute + 1;
+      this.hour = hour;
+      this.minute = minute;
    }
 
    public void notify(JComponent component) {
@@ -75,6 +75,8 @@ public class AggiungiProdottoMediator implements Mediator {
          error = 4;
       } else if (!this.isPrezzo(this.firstPrice.getText())) {
          error = 5;
+      } else if (!isDataValida()) {
+          error = 6;
       }
 
       return error;
@@ -94,4 +96,39 @@ public class AggiungiProdottoMediator implements Mediator {
       JLabel message = new JLabel(this.errors[error - 1]);
       this.frameError.add(message);
    }
+   
+   private boolean isDataValida() {
+	   Calendar calendar = Calendar.getInstance();
+	    int currentYear = calendar.get(Calendar.YEAR);
+	    int currentMonth = calendar.get(Calendar.MONTH) + 1; // Mese è 0-based in Calendar
+	    int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+	    int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+	    int currentMinute = calendar.get(Calendar.MINUTE);
+	    
+	    // Controlla se l'anno selezionato è successivo all'anno corrente
+	    if (this.year > currentYear) {
+	        return true;
+	    }
+	    // Controlla se l'anno selezionato è lo stesso dell'anno corrente e se il mese selezionato è successivo al mese corrente
+	    else if (this.year == currentYear && this.month > currentMonth) {
+	        return true;
+	    }
+	    // Controlla se l'anno e il mese selezionati sono gli stessi dell'anno e del mese corrente e se il giorno selezionato è successivo al giorno corrente
+	    else if (this.year == currentYear && this.month == currentMonth && this.day > currentDay) {
+	        return true;
+	    }
+	    // Controlla se la data selezionata è la stessa data corrente e se l'ora selezionata è successiva all'ora corrente
+	    else if (this.year == currentYear && this.month == currentMonth && this.day == currentDay &&
+	             this.hour > currentHour) {
+	        return true;
+	    }
+	    // Controlla se la data e l'ora selezionate sono la stessa data e ora correnti e se il minuto selezionato è successivo al minuto corrente
+	    else if (this.year == currentYear && this.month == currentMonth && this.day == currentDay &&
+	             this.hour == currentHour && this.minute > currentMinute) {
+	        return true;
+	    }
+	    
+	    // Se nessuna delle condizioni sopra è soddisfatta, la data non è valida
+	    return false;
+	}
 }

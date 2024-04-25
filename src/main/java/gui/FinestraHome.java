@@ -171,8 +171,8 @@ public class FinestraHome extends JFrame {
 		//scelta anno (l'asta ha come tempo limite l'anno prossimo
 		private final Integer[] years = {Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.YEAR)+1};
 		//ora e minuti
-		private Integer[] hour = {1};
-		private Integer[] minute = {1};
+		private Integer[] hour = {0};
+		private Integer[] minute = {0};
 		
 		//JComboBoxes
 		private final JComboBox<String> monthsComboBox = new JComboBox<String>(months);
@@ -320,14 +320,14 @@ public class FinestraHome extends JFrame {
 		
 		// Popola il ComboBox per le ore (da 0 a 23)
 	    private void populateHourComboBox() {
-	        for (int hour = 0; hour < 24; hour++) {
+	        for (int hour = 1; hour < 24; hour++) {
 	            hourComboBox.addItem(hour);
 	        }
 	    }
 
 	    // Popola il ComboBox per i minuti (da 0 a 59)
 	    private void populateMinuteComboBox() {
-	        for (int minute = 0; minute < 60; minute++) {
+	        for (int minute = 1; minute < 60; minute++) {
 	            minuteComboBox.addItem(minute);
 	        }
 	    }
