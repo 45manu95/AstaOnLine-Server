@@ -14,7 +14,7 @@ message Articolo {
 
 message Offerta {
   int32 articolo_id = 1;
-  string cliente_id = 2;
+  string emailUser = 2;
   float valore_offerta = 3;
 }
 

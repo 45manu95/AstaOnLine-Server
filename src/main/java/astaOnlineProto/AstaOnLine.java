@@ -1180,14 +1180,14 @@ public final class AstaOnLine {
     int getArticoloId();
 
     /**
-     * <code>string cliente_id = 2;</code>
+     * <code>string emailUser = 2;</code>
      */
-    java.lang.String getClienteId();
+    java.lang.String getEmailUser();
     /**
-     * <code>string cliente_id = 2;</code>
+     * <code>string emailUser = 2;</code>
      */
     com.google.protobuf.ByteString
-        getClienteIdBytes();
+        getEmailUserBytes();
 
     /**
      * <code>float valore_offerta = 3;</code>
@@ -1208,7 +1208,7 @@ public final class AstaOnLine {
     }
     private Offerta() {
       articoloId_ = 0;
-      clienteId_ = "";
+      emailUser_ = "";
       valoreOfferta_ = 0F;
     }
 
@@ -1244,7 +1244,7 @@ public final class AstaOnLine {
             case 18: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              clienteId_ = s;
+              emailUser_ = s;
               break;
             }
             case 29: {
@@ -1293,34 +1293,34 @@ public final class AstaOnLine {
       return articoloId_;
     }
 
-    public static final int CLIENTE_ID_FIELD_NUMBER = 2;
-    private volatile java.lang.Object clienteId_;
+    public static final int EMAILUSER_FIELD_NUMBER = 2;
+    private volatile java.lang.Object emailUser_;
     /**
-     * <code>string cliente_id = 2;</code>
+     * <code>string emailUser = 2;</code>
      */
-    public java.lang.String getClienteId() {
-      java.lang.Object ref = clienteId_;
+    public java.lang.String getEmailUser() {
+      java.lang.Object ref = emailUser_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        clienteId_ = s;
+        emailUser_ = s;
         return s;
       }
     }
     /**
-     * <code>string cliente_id = 2;</code>
+     * <code>string emailUser = 2;</code>
      */
     public com.google.protobuf.ByteString
-        getClienteIdBytes() {
-      java.lang.Object ref = clienteId_;
+        getEmailUserBytes() {
+      java.lang.Object ref = emailUser_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        clienteId_ = b;
+        emailUser_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -1353,8 +1353,8 @@ public final class AstaOnLine {
       if (articoloId_ != 0) {
         output.writeInt32(1, articoloId_);
       }
-      if (!getClienteIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, clienteId_);
+      if (!getEmailUserBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, emailUser_);
       }
       if (valoreOfferta_ != 0F) {
         output.writeFloat(3, valoreOfferta_);
@@ -1372,8 +1372,8 @@ public final class AstaOnLine {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, articoloId_);
       }
-      if (!getClienteIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, clienteId_);
+      if (!getEmailUserBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, emailUser_);
       }
       if (valoreOfferta_ != 0F) {
         size += com.google.protobuf.CodedOutputStream
@@ -1397,8 +1397,8 @@ public final class AstaOnLine {
       boolean result = true;
       result = result && (getArticoloId()
           == other.getArticoloId());
-      result = result && getClienteId()
-          .equals(other.getClienteId());
+      result = result && getEmailUser()
+          .equals(other.getEmailUser());
       result = result && (
           java.lang.Float.floatToIntBits(getValoreOfferta())
           == java.lang.Float.floatToIntBits(
@@ -1416,8 +1416,8 @@ public final class AstaOnLine {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + ARTICOLO_ID_FIELD_NUMBER;
       hash = (53 * hash) + getArticoloId();
-      hash = (37 * hash) + CLIENTE_ID_FIELD_NUMBER;
-      hash = (53 * hash) + getClienteId().hashCode();
+      hash = (37 * hash) + EMAILUSER_FIELD_NUMBER;
+      hash = (53 * hash) + getEmailUser().hashCode();
       hash = (37 * hash) + VALORE_OFFERTA_FIELD_NUMBER;
       hash = (53 * hash) + java.lang.Float.floatToIntBits(
           getValoreOfferta());
@@ -1556,7 +1556,7 @@ public final class AstaOnLine {
         super.clear();
         articoloId_ = 0;
 
-        clienteId_ = "";
+        emailUser_ = "";
 
         valoreOfferta_ = 0F;
 
@@ -1587,7 +1587,7 @@ public final class AstaOnLine {
       public astaOnlineProto.AstaOnLine.Offerta buildPartial() {
         astaOnlineProto.AstaOnLine.Offerta result = new astaOnlineProto.AstaOnLine.Offerta(this);
         result.articoloId_ = articoloId_;
-        result.clienteId_ = clienteId_;
+        result.emailUser_ = emailUser_;
         result.valoreOfferta_ = valoreOfferta_;
         onBuilt();
         return result;
@@ -1640,8 +1640,8 @@ public final class AstaOnLine {
         if (other.getArticoloId() != 0) {
           setArticoloId(other.getArticoloId());
         }
-        if (!other.getClienteId().isEmpty()) {
-          clienteId_ = other.clienteId_;
+        if (!other.getEmailUser().isEmpty()) {
+          emailUser_ = other.emailUser_;
           onChanged();
         }
         if (other.getValoreOfferta() != 0F) {
@@ -1702,71 +1702,71 @@ public final class AstaOnLine {
         return this;
       }
 
-      private java.lang.Object clienteId_ = "";
+      private java.lang.Object emailUser_ = "";
       /**
-       * <code>string cliente_id = 2;</code>
+       * <code>string emailUser = 2;</code>
        */
-      public java.lang.String getClienteId() {
-        java.lang.Object ref = clienteId_;
+      public java.lang.String getEmailUser() {
+        java.lang.Object ref = emailUser_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          clienteId_ = s;
+          emailUser_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
-       * <code>string cliente_id = 2;</code>
+       * <code>string emailUser = 2;</code>
        */
       public com.google.protobuf.ByteString
-          getClienteIdBytes() {
-        java.lang.Object ref = clienteId_;
+          getEmailUserBytes() {
+        java.lang.Object ref = emailUser_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          clienteId_ = b;
+          emailUser_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
       /**
-       * <code>string cliente_id = 2;</code>
+       * <code>string emailUser = 2;</code>
        */
-      public Builder setClienteId(
+      public Builder setEmailUser(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        clienteId_ = value;
+        emailUser_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>string cliente_id = 2;</code>
+       * <code>string emailUser = 2;</code>
        */
-      public Builder clearClienteId() {
+      public Builder clearEmailUser() {
         
-        clienteId_ = getDefaultInstance().getClienteId();
+        emailUser_ = getDefaultInstance().getEmailUser();
         onChanged();
         return this;
       }
       /**
-       * <code>string cliente_id = 2;</code>
+       * <code>string emailUser = 2;</code>
        */
-      public Builder setClienteIdBytes(
+      public Builder setEmailUserBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
         
-        clienteId_ = value;
+        emailUser_ = value;
         onChanged();
         return this;
       }
@@ -4660,23 +4660,23 @@ public final class AstaOnLine {
       "\001(\005\022\014\n\004nome\030\002 \001(\t\022\023\n\013descrizione\030\003 \001(\t\022\027" +
       "\n\017valore_partenza\030\004 \001(\002\022\023\n\013data_inizio\030\005" +
       " \001(\t\022\021\n\tdata_fine\030\006 \001(\t\022\020\n\010immagine\030\007 \001(" +
-      "\014\"J\n\007Offerta\022\023\n\013articolo_id\030\001 \001(\005\022\022\n\ncli" +
-      "ente_id\030\002 \001(\t\022\026\n\016valore_offerta\030\003 \001(\002\"T\n" +
-      "\006Utente\022\n\n\002id\030\001 \001(\005\022\014\n\004nome\030\002 \001(\t\022\017\n\007cog" +
-      "nome\030\003 \001(\t\022\r\n\005email\030\004 \001(\t\022\020\n\010password\030\005 " +
-      "\001(\t\"&\n\021MessaggioGenerico\022\021\n\tmessaggio\030\001 " +
-      "\001(\t\"\007\n\005Empty\"\'\n\010Articoli\022\033\n\010articoli\030\001 \003" +
-      "(\0132\t.Articolo2\211\003\n\013AstaService\022-\n\016Registr" +
-      "aUtente\022\007.Utente\032\022.MessaggioGenerico\022+\n\014" +
-      "AccediUtente\022\007.Utente\032\022.MessaggioGeneric" +
-      "o\022.\n\020NotificaSuccesso\022\006.Empty\032\022.Messaggi" +
-      "oGenerico\0222\n\034VisualizzaArticoliAcquistat" +
-      "i\022\007.Utente\032\t.Articoli\0222\n\034VisualizzaArtic" +
-      "oliRegistrati\022\007.Utente\032\t.Articoli\022,\n\014Inv" +
-      "iaOfferta\022\010.Offerta\032\022.MessaggioGenerico\022" +
-      ")\n\024GetArticoliInVendita\022\006.Empty\032\t.Artico" +
-      "li\022-\n\017RiceviNotifiche\022\006.Empty\032\022.Messaggi" +
-      "oGenericoB\021\n\017astaOnlineProtob\006proto3"
+      "\014\"I\n\007Offerta\022\023\n\013articolo_id\030\001 \001(\005\022\021\n\tema" +
+      "ilUser\030\002 \001(\t\022\026\n\016valore_offerta\030\003 \001(\002\"T\n\006" +
+      "Utente\022\n\n\002id\030\001 \001(\005\022\014\n\004nome\030\002 \001(\t\022\017\n\007cogn" +
+      "ome\030\003 \001(\t\022\r\n\005email\030\004 \001(\t\022\020\n\010password\030\005 \001" +
+      "(\t\"&\n\021MessaggioGenerico\022\021\n\tmessaggio\030\001 \001" +
+      "(\t\"\007\n\005Empty\"\'\n\010Articoli\022\033\n\010articoli\030\001 \003(" +
+      "\0132\t.Articolo2\211\003\n\013AstaService\022-\n\016Registra" +
+      "Utente\022\007.Utente\032\022.MessaggioGenerico\022+\n\014A" +
+      "ccediUtente\022\007.Utente\032\022.MessaggioGenerico" +
+      "\022.\n\020NotificaSuccesso\022\006.Empty\032\022.Messaggio" +
+      "Generico\0222\n\034VisualizzaArticoliAcquistati" +
+      "\022\007.Utente\032\t.Articoli\0222\n\034VisualizzaArtico" +
+      "liRegistrati\022\007.Utente\032\t.Articoli\022,\n\014Invi" +
+      "aOfferta\022\010.Offerta\032\022.MessaggioGenerico\022)" +
+      "\n\024GetArticoliInVendita\022\006.Empty\032\t.Articol" +
+      "i\022-\n\017RiceviNotifiche\022\006.Empty\032\022.Messaggio" +
+      "GenericoB\021\n\017astaOnlineProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -4701,7 +4701,7 @@ public final class AstaOnLine {
     internal_static_Offerta_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Offerta_descriptor,
-        new java.lang.String[] { "ArticoloId", "ClienteId", "ValoreOfferta", });
+        new java.lang.String[] { "ArticoloId", "EmailUser", "ValoreOfferta", });
     internal_static_Utente_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_Utente_fieldAccessorTable = new

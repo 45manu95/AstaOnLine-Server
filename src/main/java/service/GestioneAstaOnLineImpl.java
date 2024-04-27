@@ -13,8 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-
 import com.google.protobuf.ByteString;
 
 import singleton.StartMySQL;
@@ -120,6 +118,7 @@ public class GestioneAstaOnLineImpl extends AstaServiceImplBase {
 
 	            Articoli.Builder articoliBuilder = Articoli.newBuilder();
 	            while (resultSet.next()) {
+	            	int id = resultSet.getInt("id");
 	                String titolo = resultSet.getString("titolo");
 	                String descrizione = resultSet.getString("descrizione");
 	                byte[] immagine = resultSet.getBytes("immagine"); 
@@ -128,6 +127,7 @@ public class GestioneAstaOnLineImpl extends AstaServiceImplBase {
 	                LocalDateTime dataFine = resultSet.getTimestamp("data_fine").toLocalDateTime();
 
 	                Articolo articolo = Articolo.newBuilder()
+	                							 .setId(id)
 	                                             .setNome(titolo)
 	                                             .setDescrizione(descrizione)
 	                                             .setImmagine(ByteString.copyFrom(immagine)).setValorePartenza(prezzo)
@@ -146,21 +146,122 @@ public class GestioneAstaOnLineImpl extends AstaServiceImplBase {
    }
 
    public void visualizzaArticoliRegistrati(Utente request, StreamObserver<Articoli> responseObserver) {
-      super.visualizzaArticoliRegistrati(request, responseObserver);
+	   String query = "SELECT id_cliente FROM clienti WHERE email = ?";
+       try (PreparedStatement selectStatement = connection.prepareStatement(query)) {
+    	   selectStatement.setString(1, request.getEmail());
+           ResultSet resultSelectSet = selectStatement.executeQuery();
+
+           if (resultSelectSet.next()) {
+               int idCliente = resultSelectSet.getInt("id_cliente");
+               
+               // Inserimento dell'offerta nella tabella Offerta
+        	   query = "SELECT p.* FROM offerta o JOIN prodotti p ON o.ID_prodotto = p.ID LEFT JOIN prodotto_venduto pv ON p.ID = pv.ID WHERE o.id_cliente = ? AND pv.ID IS NULL";   
+               try (PreparedStatement selStatement = connection.prepareStatement(query)) {
+            	   selStatement.setInt(1, idCliente);
+            	   ResultSet resultSet = selStatement.executeQuery();
+
+            	   Articoli.Builder articoliBuilder = Articoli.newBuilder();
+   	               while (resultSet.next()) {
+   	            		int id = resultSet.getInt("id");
+   	            		String titolo = resultSet.getString("titolo");
+   	            		String descrizione = resultSet.getString("descrizione");
+   	            		byte[] immagine = resultSet.getBytes("immagine"); 
+   	            		float prezzo = resultSet.getFloat("prezzo"); 
+   	            		LocalDateTime dataInizio = resultSet.getTimestamp("data_inserimento").toLocalDateTime();
+   	            		LocalDateTime dataFine = resultSet.getTimestamp("data_fine").toLocalDateTime();
+
+   	            		Articolo articolo = Articolo.newBuilder()
+   	                							 .setId(id)
+   	                                             .setNome(titolo)
+   	                                             .setDescrizione(descrizione)
+   	                                             .setImmagine(ByteString.copyFrom(immagine)).setValorePartenza(prezzo)
+   	                                             .setDataInizio(dataInizio.toString()).setDataFine(dataFine.toString())
+   	                                             .build();
+   	            		articoliBuilder.addArticoli(articolo);
+   	               }
+   	               Articoli articoli = articoliBuilder.build();
+   	               responseObserver.onNext(articoli);
+   	               responseObserver.onCompleted();
+               }
+           }
+       }
+	   catch (SQLException e) {
+		        e.printStackTrace();
+	   }
    }
 
    public void inviaOfferta(Offerta request, StreamObserver<MessaggioGenerico> responseObserver) {
-      super.inviaOfferta(request, responseObserver);
+	   String query = "SELECT prezzo FROM prodotti WHERE id = ?";
+	   try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+           preparedStatement.setInt(1, request.getArticoloId());
+           ResultSet resultSet = preparedStatement.executeQuery();
+
+           if (resultSet.next()) {
+               float prezzoAttuale = resultSet.getFloat("prezzo");
+               
+               // Confronto il prezzo attuale con il nuovo prezzo proposto
+               if (request.getValoreOfferta() <= prezzoAttuale) {
+                   // Se il nuovo prezzo è minore o uguale al prezzo attuale, restituisci un messaggio di errore
+                   MessaggioGenerico errore = MessaggioGenerico.newBuilder()
+                       .setMessaggio("Il nuovo prezzo deve essere maggiore del prezzo attuale.")
+                       .build();
+                   responseObserver.onNext(errore);
+                   responseObserver.onCompleted();
+               } else {
+                   // Altrimenti, aggiorna il prezzo dell'articolo nel database con il nuovo prezzo proposto
+                   String updateQuery = "UPDATE prodotti SET prezzo = ? WHERE id = ?";
+                   PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
+                   updateStatement.setFloat(1, request.getValoreOfferta());
+                   updateStatement.setInt(2, request.getArticoloId());
+                   updateStatement.executeUpdate();
+                   query = "SELECT id_cliente FROM clienti WHERE email = ?";
+                   try (PreparedStatement selectStatement = connection.prepareStatement(query)) {
+                	   selectStatement.setString(1, request.getEmailUser());
+                       ResultSet resultSelectSet = selectStatement.executeQuery();
+
+                       if (resultSelectSet.next()) {
+                           int idCliente = resultSelectSet.getInt("id_cliente");
+                           
+                           // Inserimento dell'offerta nella tabella Offerta
+                           String insertQuery = "INSERT INTO Offerta (ID_cliente, ID_prodotto, prezzo) VALUES (?, ?, ?)";
+                           try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
+                               insertStatement.setInt(1, idCliente);
+                               insertStatement.setInt(2, request.getArticoloId());
+                               insertStatement.setFloat(3, request.getValoreOfferta());
+                               insertStatement.executeUpdate();
+
+                               // Invia un messaggio di conferma al client
+                               MessaggioGenerico conferma = MessaggioGenerico.newBuilder()
+                                   .setMessaggio("SUCCESSO - Offerta inserita con successo.")
+                                   .build();
+                               responseObserver.onNext(conferma);
+                               responseObserver.onCompleted();
+                           }
+                       }
+                   }
+               }
+           } 
+       }
+    catch (SQLException e) {
+       e.printStackTrace();
+       // Invia un messaggio di errore al client in caso di eccezione SQL
+       MessaggioGenerico errore = MessaggioGenerico.newBuilder()
+           .setMessaggio("ERRORE - Si è verificato un errore durante l'aggiornamento del prezzo.")
+           .build();
+       responseObserver.onNext(errore);
+       responseObserver.onCompleted();
    }
+}
 
    public void getArticoliInVendita(Empty request, StreamObserver<Articoli> responseObserver) {
-	   String query = "SELECT p.* FROM prodotti p LEFT JOIN prodotto_venduto pv ON p.id = pv.ID WHERE pv.ID IS NULL";
+	   String query = "SELECT p.* FROM prodotti p LEFT JOIN prodotto_venduto pv ON p.id = pv.ID WHERE pv.ID IS NULL AND p.data_fine < CURRENT_DATE()";
        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
            ResultSet resultSet = preparedStatement.executeQuery();
 
            Articoli.Builder articoliBuilder = Articoli.newBuilder();
            while (resultSet.next()) {
-               String titolo = resultSet.getString("titolo");
+	           int id = resultSet.getInt("id");
+	           String titolo = resultSet.getString("titolo");
                String descrizione = resultSet.getString("descrizione");
                byte[] immagine = resultSet.getBytes("immagine"); 
                float prezzo = resultSet.getFloat("prezzo"); 
@@ -168,12 +269,12 @@ public class GestioneAstaOnLineImpl extends AstaServiceImplBase {
                LocalDateTime dataFine = resultSet.getTimestamp("data_fine").toLocalDateTime();
 
                Articolo articolo = Articolo.newBuilder()
+            		   						.setId(id)
                                             .setNome(titolo)
                                             .setDescrizione(descrizione)
                                             .setImmagine(ByteString.copyFrom(immagine)).setValorePartenza(prezzo)
                                             .setDataInizio(dataInizio.toString()).setDataFine(dataFine.toString())
                                             .build();
-               articoliBuilder.addArticoli(articolo);
            }
 
            Articoli articoli = articoliBuilder.build();
@@ -184,7 +285,6 @@ public class GestioneAstaOnLineImpl extends AstaServiceImplBase {
        e.printStackTrace();
    }
 }
- 
 
    public void riceviNotifiche(Empty request, StreamObserver<MessaggioGenerico> responseObserver) {
       super.riceviNotifiche(request, responseObserver);
