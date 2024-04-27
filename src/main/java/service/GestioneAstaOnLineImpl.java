@@ -109,7 +109,40 @@ public class GestioneAstaOnLineImpl extends AstaServiceImplBase {
    }
 
    public void visualizzaArticoliAcquistati(Utente request, StreamObserver<Articoli> responseObserver) {
-      super.visualizzaArticoliAcquistati(request, responseObserver);
+	   String query = "SELECT p.* FROM clienti c JOIN prodotto_venduto pv ON c.id_cliente = pv.acquirente JOIN prodotti p ON pv.ID = p.id WHERE c.email = ? AND c.password = ?";   
+	   
+	   try {
+	         PreparedStatement showStatement = this.connection.prepareStatement(query);
+
+	         	showStatement.setString(1, request.getEmail());
+	         	showStatement.setString(2, request.getPassword());
+	            ResultSet resultSet = showStatement.executeQuery();
+
+	            Articoli.Builder articoliBuilder = Articoli.newBuilder();
+	            while (resultSet.next()) {
+	                String titolo = resultSet.getString("titolo");
+	                String descrizione = resultSet.getString("descrizione");
+	                byte[] immagine = resultSet.getBytes("immagine"); 
+	                float prezzo = resultSet.getFloat("prezzo"); 
+	                LocalDateTime dataInizio = resultSet.getTimestamp("data_inserimento").toLocalDateTime();
+	                LocalDateTime dataFine = resultSet.getTimestamp("data_fine").toLocalDateTime();
+
+	                Articolo articolo = Articolo.newBuilder()
+	                                             .setNome(titolo)
+	                                             .setDescrizione(descrizione)
+	                                             .setImmagine(ByteString.copyFrom(immagine)).setValorePartenza(prezzo)
+	                                             .setDataInizio(dataInizio.toString()).setDataFine(dataFine.toString())
+	                                             .build();
+	                articoliBuilder.addArticoli(articolo);
+	            }
+
+	            Articoli articoli = articoliBuilder.build();
+	            responseObserver.onNext(articoli);
+	            responseObserver.onCompleted();
+	        }
+	     catch (SQLException e) {
+	        e.printStackTrace();
+	    }
    }
 
    public void visualizzaArticoliRegistrati(Utente request, StreamObserver<Articoli> responseObserver) {
@@ -121,7 +154,7 @@ public class GestioneAstaOnLineImpl extends AstaServiceImplBase {
    }
 
    public void getArticoliInVendita(Empty request, StreamObserver<Articoli> responseObserver) {
-	   String query = "SELECT * FROM prodotti";
+	   String query = "SELECT p.* FROM prodotti p LEFT JOIN prodotto_venduto pv ON p.id = pv.ID WHERE pv.ID IS NULL";
        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
            ResultSet resultSet = preparedStatement.executeQuery();
 
