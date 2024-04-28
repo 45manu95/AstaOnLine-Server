@@ -52,7 +52,7 @@ service AstaService {
 
   rpc GetArticoliInVendita (Empty) returns (Articoli);
 
-  rpc RiceviNotifiche (Empty) returns (MessaggioGenerico);
+  rpc RiceviNotifiche (Articolo) returns (MessaggioGenerico);
 }
 
 

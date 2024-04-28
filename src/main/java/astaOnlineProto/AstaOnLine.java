@@ -4666,7 +4666,7 @@ public final class AstaOnLine {
       "ome\030\003 \001(\t\022\r\n\005email\030\004 \001(\t\022\020\n\010password\030\005 \001" +
       "(\t\"&\n\021MessaggioGenerico\022\021\n\tmessaggio\030\001 \001" +
       "(\t\"\007\n\005Empty\"\'\n\010Articoli\022\033\n\010articoli\030\001 \003(" +
-      "\0132\t.Articolo2\211\003\n\013AstaService\022-\n\016Registra" +
+      "\0132\t.Articolo2\214\003\n\013AstaService\022-\n\016Registra" +
       "Utente\022\007.Utente\032\022.MessaggioGenerico\022+\n\014A" +
       "ccediUtente\022\007.Utente\032\022.MessaggioGenerico" +
       "\022.\n\020NotificaSuccesso\022\006.Empty\032\022.Messaggio" +
@@ -4675,8 +4675,8 @@ public final class AstaOnLine {
       "liRegistrati\022\007.Utente\032\t.Articoli\022,\n\014Invi" +
       "aOfferta\022\010.Offerta\032\022.MessaggioGenerico\022)" +
       "\n\024GetArticoliInVendita\022\006.Empty\032\t.Articol" +
-      "i\022-\n\017RiceviNotifiche\022\006.Empty\032\022.Messaggio" +
-      "GenericoB\021\n\017astaOnlineProtob\006proto3"
+      "i\0220\n\017RiceviNotifiche\022\t.Articolo\032\022.Messag" +
+      "gioGenericoB\021\n\017astaOnlineProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

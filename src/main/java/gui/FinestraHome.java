@@ -68,7 +68,7 @@ public class FinestraHome extends JFrame {
 
     //ritocchi grafici	
 	public FinestraHome(int port) {
-		setTitle("Asta Online");
+		setTitle("Asta Online SERVER");
 		setSize(1100,600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);

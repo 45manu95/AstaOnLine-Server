@@ -8,6 +8,8 @@ import astaOnlineProto.AstaOnLine.Offerta;
 import astaOnlineProto.AstaOnLine.Utente;
 import astaOnlineProto.AstaServiceGrpc.AstaServiceImplBase;
 import io.grpc.stub.StreamObserver;
+import observerPubSub.PublisherImpl;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,8 +19,10 @@ import com.google.protobuf.ByteString;
 
 import singleton.StartMySQL;
 
+
 public class GestioneAstaOnLineImpl extends AstaServiceImplBase {
    private Connection connection = StartMySQL.getInstance();
+   private PublisherImpl publisher = new PublisherImpl();
 
    public void registraUtente(Utente request, StreamObserver<MessaggioGenerico> responseObserver) {
       String messaggio = "";
@@ -229,6 +233,9 @@ public class GestioneAstaOnLineImpl extends AstaServiceImplBase {
                                insertStatement.setInt(2, request.getArticoloId());
                                insertStatement.setFloat(3, request.getValoreOfferta());
                                insertStatement.executeUpdate();
+                               
+                               publisher.subscribe(request.getArticoloId(), idCliente);
+                               publisher.inserisciMessaggioOfferta(idCliente, request.getArticoloId(), request.getValoreOfferta());
 
                                // Invia un messaggio di conferma al client
                                MessaggioGenerico conferma = MessaggioGenerico.newBuilder()
@@ -275,6 +282,7 @@ public class GestioneAstaOnLineImpl extends AstaServiceImplBase {
                                             .setImmagine(ByteString.copyFrom(immagine)).setValorePartenza(prezzo)
                                             .setDataInizio(dataInizio.toString()).setDataFine(dataFine.toString())
                                             .build();
+               articoliBuilder.addArticoli(articolo);
            }
 
            Articoli articoli = articoliBuilder.build();
@@ -286,7 +294,15 @@ public class GestioneAstaOnLineImpl extends AstaServiceImplBase {
    }
 }
 
-   public void riceviNotifiche(Empty request, StreamObserver<MessaggioGenerico> responseObserver) {
-      super.riceviNotifiche(request, responseObserver);
-   }
+   public void riceviNotifiche(Articolo articolo, StreamObserver<MessaggioGenerico> responseObserver) {
+	   String testoMessaggio;
+	   try {
+		   testoMessaggio = publisher.notifySubscribers(articolo.getId());
+		   MessaggioGenerico message = MessaggioGenerico.newBuilder().setMessaggio(testoMessaggio).build();
+		   responseObserver.onNext(message);
+		   responseObserver.onCompleted();
+	   } catch (InterruptedException e) {
+		   e.printStackTrace();
+	   }
+	}
 }
