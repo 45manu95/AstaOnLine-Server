@@ -6,16 +6,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.SocketTimeoutException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import observerPubSub.PublisherImpl;
 import singleton.StartMySQL;
 
 public class AggiungiProdottoCommand implements ActionListener {
@@ -63,6 +69,7 @@ public class AggiungiProdottoCommand implements ActionListener {
                int rowsAffected = preparedStatement.executeUpdate();
                if (rowsAffected > 0) {
                   this.message = "SUCCESSO - Articolo aggiunto e asta avviata";
+                  avviaTimer();
                } else {
                   this.message = "ERRORE - Errore durante l'aggiunta del prodotto al database.";
                }
@@ -113,5 +120,33 @@ public class AggiungiProdottoCommand implements ActionListener {
       panel.add(buttonPanel);
       this.frameMessage.add(panel);
       this.frameMessage.pack();
+   }
+   
+   private void avviaTimer() {
+	   int articolo = 0;
+	   String queryId = "SELECT id FROM prodotti ORDER BY id DESC LIMIT 1";
+	   try {
+           PreparedStatement preparedStatement = this.connection.prepareStatement(queryId);
+           ResultSet resultSet = preparedStatement.executeQuery(); 
+           if (resultSet.next()) { 
+               articolo = resultSet.getInt("id");
+           }
+           final int articolo_id = articolo;
+           Thread articleTimer = new Thread(() -> {
+    		   try {
+    			   LocalDateTime endTime = LocalDateTime.of(year, month, day, hour, minute);
+    			   LocalDateTime currentTime = LocalDateTime.now();
+    			   long remainingTime = ChronoUnit.MILLIS.between(currentTime, endTime);
+    			   Thread.sleep(remainingTime);
+    			   new PublisherImpl().pubblicaVincitore(articolo_id);
+    			} catch (InterruptedException e) {
+    				   e.printStackTrace();
+    			}
+    	   });
+    	   articleTimer.start();
+        } catch (SQLException e) {
+           e.printStackTrace();
+           message = "ERRORE - Errore durante l'aggiunta del prodotto al database.";
+        }
    }
 }

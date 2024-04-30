@@ -37,6 +37,12 @@ message Articoli {
 	repeated Articolo articoli = 1;
 }
 
+message ArticoloNotifica {
+  int32 indexNotifica = 1;
+  Articolo articolo = 2;
+}
+
+
 service AstaService {
   rpc RegistraUtente (Utente) returns (MessaggioGenerico);
 
@@ -52,7 +58,8 @@ service AstaService {
 
   rpc GetArticoliInVendita (Empty) returns (Articoli);
 
-  rpc RiceviNotifiche (Articolo) returns (MessaggioGenerico);
+  rpc RiceviNotifiche (ArticoloNotifica) returns (MessaggioGenerico);
 }
+
 
 

@@ -4617,6 +4617,676 @@ public final class AstaOnLine {
 
   }
 
+  public interface ArticoloNotificaOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:ArticoloNotifica)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>int32 indexNotifica = 1;</code>
+     */
+    int getIndexNotifica();
+
+    /**
+     * <code>.Articolo articolo = 2;</code>
+     */
+    boolean hasArticolo();
+    /**
+     * <code>.Articolo articolo = 2;</code>
+     */
+    astaOnlineProto.AstaOnLine.Articolo getArticolo();
+    /**
+     * <code>.Articolo articolo = 2;</code>
+     */
+    astaOnlineProto.AstaOnLine.ArticoloOrBuilder getArticoloOrBuilder();
+  }
+  /**
+   * Protobuf type {@code ArticoloNotifica}
+   */
+  public  static final class ArticoloNotifica extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:ArticoloNotifica)
+      ArticoloNotificaOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ArticoloNotifica.newBuilder() to construct.
+    private ArticoloNotifica(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ArticoloNotifica() {
+      indexNotifica_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ArticoloNotifica(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              indexNotifica_ = input.readInt32();
+              break;
+            }
+            case 18: {
+              astaOnlineProto.AstaOnLine.Articolo.Builder subBuilder = null;
+              if (articolo_ != null) {
+                subBuilder = articolo_.toBuilder();
+              }
+              articolo_ = input.readMessage(astaOnlineProto.AstaOnLine.Articolo.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(articolo_);
+                articolo_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return astaOnlineProto.AstaOnLine.internal_static_ArticoloNotifica_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return astaOnlineProto.AstaOnLine.internal_static_ArticoloNotifica_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              astaOnlineProto.AstaOnLine.ArticoloNotifica.class, astaOnlineProto.AstaOnLine.ArticoloNotifica.Builder.class);
+    }
+
+    public static final int INDEXNOTIFICA_FIELD_NUMBER = 1;
+    private int indexNotifica_;
+    /**
+     * <code>int32 indexNotifica = 1;</code>
+     */
+    public int getIndexNotifica() {
+      return indexNotifica_;
+    }
+
+    public static final int ARTICOLO_FIELD_NUMBER = 2;
+    private astaOnlineProto.AstaOnLine.Articolo articolo_;
+    /**
+     * <code>.Articolo articolo = 2;</code>
+     */
+    public boolean hasArticolo() {
+      return articolo_ != null;
+    }
+    /**
+     * <code>.Articolo articolo = 2;</code>
+     */
+    public astaOnlineProto.AstaOnLine.Articolo getArticolo() {
+      return articolo_ == null ? astaOnlineProto.AstaOnLine.Articolo.getDefaultInstance() : articolo_;
+    }
+    /**
+     * <code>.Articolo articolo = 2;</code>
+     */
+    public astaOnlineProto.AstaOnLine.ArticoloOrBuilder getArticoloOrBuilder() {
+      return getArticolo();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (indexNotifica_ != 0) {
+        output.writeInt32(1, indexNotifica_);
+      }
+      if (articolo_ != null) {
+        output.writeMessage(2, getArticolo());
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (indexNotifica_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, indexNotifica_);
+      }
+      if (articolo_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, getArticolo());
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof astaOnlineProto.AstaOnLine.ArticoloNotifica)) {
+        return super.equals(obj);
+      }
+      astaOnlineProto.AstaOnLine.ArticoloNotifica other = (astaOnlineProto.AstaOnLine.ArticoloNotifica) obj;
+
+      boolean result = true;
+      result = result && (getIndexNotifica()
+          == other.getIndexNotifica());
+      result = result && (hasArticolo() == other.hasArticolo());
+      if (hasArticolo()) {
+        result = result && getArticolo()
+            .equals(other.getArticolo());
+      }
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + INDEXNOTIFICA_FIELD_NUMBER;
+      hash = (53 * hash) + getIndexNotifica();
+      if (hasArticolo()) {
+        hash = (37 * hash) + ARTICOLO_FIELD_NUMBER;
+        hash = (53 * hash) + getArticolo().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static astaOnlineProto.AstaOnLine.ArticoloNotifica parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static astaOnlineProto.AstaOnLine.ArticoloNotifica parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static astaOnlineProto.AstaOnLine.ArticoloNotifica parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static astaOnlineProto.AstaOnLine.ArticoloNotifica parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static astaOnlineProto.AstaOnLine.ArticoloNotifica parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static astaOnlineProto.AstaOnLine.ArticoloNotifica parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static astaOnlineProto.AstaOnLine.ArticoloNotifica parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static astaOnlineProto.AstaOnLine.ArticoloNotifica parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static astaOnlineProto.AstaOnLine.ArticoloNotifica parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static astaOnlineProto.AstaOnLine.ArticoloNotifica parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static astaOnlineProto.AstaOnLine.ArticoloNotifica parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static astaOnlineProto.AstaOnLine.ArticoloNotifica parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(astaOnlineProto.AstaOnLine.ArticoloNotifica prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code ArticoloNotifica}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:ArticoloNotifica)
+        astaOnlineProto.AstaOnLine.ArticoloNotificaOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return astaOnlineProto.AstaOnLine.internal_static_ArticoloNotifica_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return astaOnlineProto.AstaOnLine.internal_static_ArticoloNotifica_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                astaOnlineProto.AstaOnLine.ArticoloNotifica.class, astaOnlineProto.AstaOnLine.ArticoloNotifica.Builder.class);
+      }
+
+      // Construct using astaOnlineProto.AstaOnLine.ArticoloNotifica.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        indexNotifica_ = 0;
+
+        if (articoloBuilder_ == null) {
+          articolo_ = null;
+        } else {
+          articolo_ = null;
+          articoloBuilder_ = null;
+        }
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return astaOnlineProto.AstaOnLine.internal_static_ArticoloNotifica_descriptor;
+      }
+
+      @java.lang.Override
+      public astaOnlineProto.AstaOnLine.ArticoloNotifica getDefaultInstanceForType() {
+        return astaOnlineProto.AstaOnLine.ArticoloNotifica.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public astaOnlineProto.AstaOnLine.ArticoloNotifica build() {
+        astaOnlineProto.AstaOnLine.ArticoloNotifica result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public astaOnlineProto.AstaOnLine.ArticoloNotifica buildPartial() {
+        astaOnlineProto.AstaOnLine.ArticoloNotifica result = new astaOnlineProto.AstaOnLine.ArticoloNotifica(this);
+        result.indexNotifica_ = indexNotifica_;
+        if (articoloBuilder_ == null) {
+          result.articolo_ = articolo_;
+        } else {
+          result.articolo_ = articoloBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof astaOnlineProto.AstaOnLine.ArticoloNotifica) {
+          return mergeFrom((astaOnlineProto.AstaOnLine.ArticoloNotifica)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(astaOnlineProto.AstaOnLine.ArticoloNotifica other) {
+        if (other == astaOnlineProto.AstaOnLine.ArticoloNotifica.getDefaultInstance()) return this;
+        if (other.getIndexNotifica() != 0) {
+          setIndexNotifica(other.getIndexNotifica());
+        }
+        if (other.hasArticolo()) {
+          mergeArticolo(other.getArticolo());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        astaOnlineProto.AstaOnLine.ArticoloNotifica parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (astaOnlineProto.AstaOnLine.ArticoloNotifica) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int indexNotifica_ ;
+      /**
+       * <code>int32 indexNotifica = 1;</code>
+       */
+      public int getIndexNotifica() {
+        return indexNotifica_;
+      }
+      /**
+       * <code>int32 indexNotifica = 1;</code>
+       */
+      public Builder setIndexNotifica(int value) {
+        
+        indexNotifica_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 indexNotifica = 1;</code>
+       */
+      public Builder clearIndexNotifica() {
+        
+        indexNotifica_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private astaOnlineProto.AstaOnLine.Articolo articolo_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          astaOnlineProto.AstaOnLine.Articolo, astaOnlineProto.AstaOnLine.Articolo.Builder, astaOnlineProto.AstaOnLine.ArticoloOrBuilder> articoloBuilder_;
+      /**
+       * <code>.Articolo articolo = 2;</code>
+       */
+      public boolean hasArticolo() {
+        return articoloBuilder_ != null || articolo_ != null;
+      }
+      /**
+       * <code>.Articolo articolo = 2;</code>
+       */
+      public astaOnlineProto.AstaOnLine.Articolo getArticolo() {
+        if (articoloBuilder_ == null) {
+          return articolo_ == null ? astaOnlineProto.AstaOnLine.Articolo.getDefaultInstance() : articolo_;
+        } else {
+          return articoloBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.Articolo articolo = 2;</code>
+       */
+      public Builder setArticolo(astaOnlineProto.AstaOnLine.Articolo value) {
+        if (articoloBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          articolo_ = value;
+          onChanged();
+        } else {
+          articoloBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.Articolo articolo = 2;</code>
+       */
+      public Builder setArticolo(
+          astaOnlineProto.AstaOnLine.Articolo.Builder builderForValue) {
+        if (articoloBuilder_ == null) {
+          articolo_ = builderForValue.build();
+          onChanged();
+        } else {
+          articoloBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>.Articolo articolo = 2;</code>
+       */
+      public Builder mergeArticolo(astaOnlineProto.AstaOnLine.Articolo value) {
+        if (articoloBuilder_ == null) {
+          if (articolo_ != null) {
+            articolo_ =
+              astaOnlineProto.AstaOnLine.Articolo.newBuilder(articolo_).mergeFrom(value).buildPartial();
+          } else {
+            articolo_ = value;
+          }
+          onChanged();
+        } else {
+          articoloBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>.Articolo articolo = 2;</code>
+       */
+      public Builder clearArticolo() {
+        if (articoloBuilder_ == null) {
+          articolo_ = null;
+          onChanged();
+        } else {
+          articolo_ = null;
+          articoloBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>.Articolo articolo = 2;</code>
+       */
+      public astaOnlineProto.AstaOnLine.Articolo.Builder getArticoloBuilder() {
+        
+        onChanged();
+        return getArticoloFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.Articolo articolo = 2;</code>
+       */
+      public astaOnlineProto.AstaOnLine.ArticoloOrBuilder getArticoloOrBuilder() {
+        if (articoloBuilder_ != null) {
+          return articoloBuilder_.getMessageOrBuilder();
+        } else {
+          return articolo_ == null ?
+              astaOnlineProto.AstaOnLine.Articolo.getDefaultInstance() : articolo_;
+        }
+      }
+      /**
+       * <code>.Articolo articolo = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          astaOnlineProto.AstaOnLine.Articolo, astaOnlineProto.AstaOnLine.Articolo.Builder, astaOnlineProto.AstaOnLine.ArticoloOrBuilder> 
+          getArticoloFieldBuilder() {
+        if (articoloBuilder_ == null) {
+          articoloBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              astaOnlineProto.AstaOnLine.Articolo, astaOnlineProto.AstaOnLine.Articolo.Builder, astaOnlineProto.AstaOnLine.ArticoloOrBuilder>(
+                  getArticolo(),
+                  getParentForChildren(),
+                  isClean());
+          articolo_ = null;
+        }
+        return articoloBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:ArticoloNotifica)
+    }
+
+    // @@protoc_insertion_point(class_scope:ArticoloNotifica)
+    private static final astaOnlineProto.AstaOnLine.ArticoloNotifica DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new astaOnlineProto.AstaOnLine.ArticoloNotifica();
+    }
+
+    public static astaOnlineProto.AstaOnLine.ArticoloNotifica getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ArticoloNotifica>
+        PARSER = new com.google.protobuf.AbstractParser<ArticoloNotifica>() {
+      @java.lang.Override
+      public ArticoloNotifica parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ArticoloNotifica(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ArticoloNotifica> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ArticoloNotifica> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public astaOnlineProto.AstaOnLine.ArticoloNotifica getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_Articolo_descriptor;
   private static final 
@@ -4647,6 +5317,11 @@ public final class AstaOnLine {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_Articoli_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_ArticoloNotifica_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_ArticoloNotifica_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -4666,16 +5341,18 @@ public final class AstaOnLine {
       "ome\030\003 \001(\t\022\r\n\005email\030\004 \001(\t\022\020\n\010password\030\005 \001" +
       "(\t\"&\n\021MessaggioGenerico\022\021\n\tmessaggio\030\001 \001" +
       "(\t\"\007\n\005Empty\"\'\n\010Articoli\022\033\n\010articoli\030\001 \003(" +
-      "\0132\t.Articolo2\214\003\n\013AstaService\022-\n\016Registra" +
-      "Utente\022\007.Utente\032\022.MessaggioGenerico\022+\n\014A" +
-      "ccediUtente\022\007.Utente\032\022.MessaggioGenerico" +
-      "\022.\n\020NotificaSuccesso\022\006.Empty\032\022.Messaggio" +
-      "Generico\0222\n\034VisualizzaArticoliAcquistati" +
-      "\022\007.Utente\032\t.Articoli\0222\n\034VisualizzaArtico" +
-      "liRegistrati\022\007.Utente\032\t.Articoli\022,\n\014Invi" +
-      "aOfferta\022\010.Offerta\032\022.MessaggioGenerico\022)" +
-      "\n\024GetArticoliInVendita\022\006.Empty\032\t.Articol" +
-      "i\0220\n\017RiceviNotifiche\022\t.Articolo\032\022.Messag" +
+      "\0132\t.Articolo\"F\n\020ArticoloNotifica\022\025\n\rinde" +
+      "xNotifica\030\001 \001(\005\022\033\n\010articolo\030\002 \001(\0132\t.Arti" +
+      "colo2\224\003\n\013AstaService\022-\n\016RegistraUtente\022\007" +
+      ".Utente\032\022.MessaggioGenerico\022+\n\014AccediUte" +
+      "nte\022\007.Utente\032\022.MessaggioGenerico\022.\n\020Noti" +
+      "ficaSuccesso\022\006.Empty\032\022.MessaggioGenerico" +
+      "\0222\n\034VisualizzaArticoliAcquistati\022\007.Utent" +
+      "e\032\t.Articoli\0222\n\034VisualizzaArticoliRegist" +
+      "rati\022\007.Utente\032\t.Articoli\022,\n\014InviaOfferta" +
+      "\022\010.Offerta\032\022.MessaggioGenerico\022)\n\024GetArt" +
+      "icoliInVendita\022\006.Empty\032\t.Articoli\0228\n\017Ric" +
+      "eviNotifiche\022\021.ArticoloNotifica\032\022.Messag" +
       "gioGenericoB\021\n\017astaOnlineProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
@@ -4726,6 +5403,12 @@ public final class AstaOnLine {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Articoli_descriptor,
         new java.lang.String[] { "Articoli", });
+    internal_static_ArticoloNotifica_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_ArticoloNotifica_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_ArticoloNotifica_descriptor,
+        new java.lang.String[] { "IndexNotifica", "Articolo", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

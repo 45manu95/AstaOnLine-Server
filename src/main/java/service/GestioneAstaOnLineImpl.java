@@ -2,6 +2,7 @@ package service;
 
 import astaOnlineProto.AstaOnLine.Articoli;
 import astaOnlineProto.AstaOnLine.Articolo;
+import astaOnlineProto.AstaOnLine.ArticoloNotifica;
 import astaOnlineProto.AstaOnLine.Empty;
 import astaOnlineProto.AstaOnLine.MessaggioGenerico;
 import astaOnlineProto.AstaOnLine.Offerta;
@@ -159,7 +160,7 @@ public class GestioneAstaOnLineImpl extends AstaServiceImplBase {
                int idCliente = resultSelectSet.getInt("id_cliente");
                
                // Inserimento dell'offerta nella tabella Offerta
-        	   query = "SELECT p.* FROM offerta o JOIN prodotti p ON o.ID_prodotto = p.ID LEFT JOIN prodotto_venduto pv ON p.ID = pv.ID WHERE o.id_cliente = ? AND pv.ID IS NULL";   
+        	   query = "SELECT DISTINCT p.* FROM offerta o JOIN prodotti p ON o.ID_prodotto = p.ID LEFT JOIN prodotto_venduto pv ON p.ID = pv.ID WHERE o.id_cliente = ? AND pv.ID IS NULL";   
                try (PreparedStatement selStatement = connection.prepareStatement(query)) {
             	   selStatement.setInt(1, idCliente);
             	   ResultSet resultSet = selStatement.executeQuery();
@@ -261,7 +262,7 @@ public class GestioneAstaOnLineImpl extends AstaServiceImplBase {
 }
 
    public void getArticoliInVendita(Empty request, StreamObserver<Articoli> responseObserver) {
-	   String query = "SELECT p.* FROM prodotti p LEFT JOIN prodotto_venduto pv ON p.id = pv.ID WHERE pv.ID IS NULL AND p.data_fine < CURRENT_DATE()";
+	   String query = "SELECT p.* FROM prodotti p LEFT JOIN prodotto_venduto pv ON p.id = pv.ID WHERE pv.ID IS NULL AND p.data_fine > CURRENT_DATE()";
        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
            ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -294,10 +295,10 @@ public class GestioneAstaOnLineImpl extends AstaServiceImplBase {
    }
 }
 
-   public void riceviNotifiche(Articolo articolo, StreamObserver<MessaggioGenerico> responseObserver) {
+   public void riceviNotifiche(ArticoloNotifica articoloNotifica, StreamObserver<MessaggioGenerico> responseObserver) {
 	   String testoMessaggio;
 	   try {
-		   testoMessaggio = publisher.notifySubscribers(articolo.getId());
+		   testoMessaggio = publisher.notifySubscribers(articoloNotifica.getIndexNotifica(),articoloNotifica.getArticolo().getId());
 		   MessaggioGenerico message = MessaggioGenerico.newBuilder().setMessaggio(testoMessaggio).build();
 		   responseObserver.onNext(message);
 		   responseObserver.onCompleted();

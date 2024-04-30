@@ -115,7 +115,6 @@ public class ProductPanel extends JPanel {
 		private JPanel dateStartDisposition = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		private JPanel dateEndDisposition = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		private JPanel timerDisposition = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		private JPanel buttonDisposition = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
 		private JLabel title;
 		private JLabel imageProduct;
@@ -175,7 +174,6 @@ public class ProductPanel extends JPanel {
 			disposition.add(dateStartDisposition);
 			disposition.add(dateEndDisposition);
 			disposition.add(timerDisposition);
-			disposition.add(buttonDisposition);
 			
 			add(disposition, BorderLayout.CENTER);
 		}

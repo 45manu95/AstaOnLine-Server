@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.google.protobuf.ByteString;
 
+import astaOnlineProto.AstaOnLine.Articoli;
 import astaOnlineProto.AstaOnLine.Articolo;
 import singleton.StartMySQL;
 
@@ -117,6 +118,38 @@ public class SqlQuery {
 		        e.printStackTrace();
 		    }
 		   return listaArticoli;
+	}
+	
+	public static int trovaMaggioreOfferente(int articolo_id) {
+		/*
+		 * clientID = valore di default nel caso in cui non sia trovata nessuna offerta
+		 * Significa che il prodotto non risulta venduto
+		 */
+	    int clientId = -1; 
+		String query = "SELECT COUNT(*) AS num_rows FROM offerta WHERE ID_prodotto = ?";
+		try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, articolo_id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int numRows = resultSet.getInt("num_rows");
+                    if(numRows > 0) { 
+                    	String sql = "SELECT o.id_cliente FROM offerta o INNER JOIN prodotti p ON o.ID_prodotto = p.id WHERE p.id = ? AND o.prezzo = (SELECT MAX(prezzo) FROM offerta WHERE ID_prodotto = p.id)";
+                    	try (PreparedStatement preparedStatement1 = connection.prepareStatement(sql)) {
+                    		preparedStatement1.setInt(1, articolo_id);
+                    		try (ResultSet resultSet1 = preparedStatement1.executeQuery()) {
+                    			if (resultSet1.next()) {
+                    				clientId = resultSet1.getInt("ID_cliente");
+                    			}
+                    		}
+                    	}
+                    }
+                }
+            }
+        }
+        catch (SQLException e) {
+        	e.printStackTrace();
+        }
+		return clientId;
 	}
 
 }

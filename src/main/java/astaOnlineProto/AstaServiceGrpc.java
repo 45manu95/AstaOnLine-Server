@@ -251,28 +251,28 @@ public final class AstaServiceGrpc {
      return getGetArticoliInVenditaMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<astaOnlineProto.AstaOnLine.Articolo,
+  private static volatile io.grpc.MethodDescriptor<astaOnlineProto.AstaOnLine.ArticoloNotifica,
       astaOnlineProto.AstaOnLine.MessaggioGenerico> getRiceviNotificheMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "RiceviNotifiche",
-      requestType = astaOnlineProto.AstaOnLine.Articolo.class,
+      requestType = astaOnlineProto.AstaOnLine.ArticoloNotifica.class,
       responseType = astaOnlineProto.AstaOnLine.MessaggioGenerico.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<astaOnlineProto.AstaOnLine.Articolo,
+  public static io.grpc.MethodDescriptor<astaOnlineProto.AstaOnLine.ArticoloNotifica,
       astaOnlineProto.AstaOnLine.MessaggioGenerico> getRiceviNotificheMethod() {
-    io.grpc.MethodDescriptor<astaOnlineProto.AstaOnLine.Articolo, astaOnlineProto.AstaOnLine.MessaggioGenerico> getRiceviNotificheMethod;
+    io.grpc.MethodDescriptor<astaOnlineProto.AstaOnLine.ArticoloNotifica, astaOnlineProto.AstaOnLine.MessaggioGenerico> getRiceviNotificheMethod;
     if ((getRiceviNotificheMethod = AstaServiceGrpc.getRiceviNotificheMethod) == null) {
       synchronized (AstaServiceGrpc.class) {
         if ((getRiceviNotificheMethod = AstaServiceGrpc.getRiceviNotificheMethod) == null) {
           AstaServiceGrpc.getRiceviNotificheMethod = getRiceviNotificheMethod = 
-              io.grpc.MethodDescriptor.<astaOnlineProto.AstaOnLine.Articolo, astaOnlineProto.AstaOnLine.MessaggioGenerico>newBuilder()
+              io.grpc.MethodDescriptor.<astaOnlineProto.AstaOnLine.ArticoloNotifica, astaOnlineProto.AstaOnLine.MessaggioGenerico>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "AstaService", "RiceviNotifiche"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  astaOnlineProto.AstaOnLine.Articolo.getDefaultInstance()))
+                  astaOnlineProto.AstaOnLine.ArticoloNotifica.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   astaOnlineProto.AstaOnLine.MessaggioGenerico.getDefaultInstance()))
                   .setSchemaDescriptor(new AstaServiceMethodDescriptorSupplier("RiceviNotifiche"))
@@ -361,7 +361,7 @@ public final class AstaServiceGrpc {
 
     /**
      */
-    public void riceviNotifiche(astaOnlineProto.AstaOnLine.Articolo request,
+    public void riceviNotifiche(astaOnlineProto.AstaOnLine.ArticoloNotifica request,
         io.grpc.stub.StreamObserver<astaOnlineProto.AstaOnLine.MessaggioGenerico> responseObserver) {
       asyncUnimplementedUnaryCall(getRiceviNotificheMethod(), responseObserver);
     }
@@ -421,7 +421,7 @@ public final class AstaServiceGrpc {
             getRiceviNotificheMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                astaOnlineProto.AstaOnLine.Articolo,
+                astaOnlineProto.AstaOnLine.ArticoloNotifica,
                 astaOnlineProto.AstaOnLine.MessaggioGenerico>(
                   this, METHODID_RICEVI_NOTIFICHE)))
           .build();
@@ -504,7 +504,7 @@ public final class AstaServiceGrpc {
 
     /**
      */
-    public void riceviNotifiche(astaOnlineProto.AstaOnLine.Articolo request,
+    public void riceviNotifiche(astaOnlineProto.AstaOnLine.ArticoloNotifica request,
         io.grpc.stub.StreamObserver<astaOnlineProto.AstaOnLine.MessaggioGenerico> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getRiceviNotificheMethod(), getCallOptions()), request, responseObserver);
@@ -580,7 +580,7 @@ public final class AstaServiceGrpc {
 
     /**
      */
-    public astaOnlineProto.AstaOnLine.MessaggioGenerico riceviNotifiche(astaOnlineProto.AstaOnLine.Articolo request) {
+    public astaOnlineProto.AstaOnLine.MessaggioGenerico riceviNotifiche(astaOnlineProto.AstaOnLine.ArticoloNotifica request) {
       return blockingUnaryCall(
           getChannel(), getRiceviNotificheMethod(), getCallOptions(), request);
     }
@@ -663,7 +663,7 @@ public final class AstaServiceGrpc {
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<astaOnlineProto.AstaOnLine.MessaggioGenerico> riceviNotifiche(
-        astaOnlineProto.AstaOnLine.Articolo request) {
+        astaOnlineProto.AstaOnLine.ArticoloNotifica request) {
       return futureUnaryCall(
           getChannel().newCall(getRiceviNotificheMethod(), getCallOptions()), request);
     }
@@ -724,7 +724,7 @@ public final class AstaServiceGrpc {
               (io.grpc.stub.StreamObserver<astaOnlineProto.AstaOnLine.Articoli>) responseObserver);
           break;
         case METHODID_RICEVI_NOTIFICHE:
-          serviceImpl.riceviNotifiche((astaOnlineProto.AstaOnLine.Articolo) request,
+          serviceImpl.riceviNotifiche((astaOnlineProto.AstaOnLine.ArticoloNotifica) request,
               (io.grpc.stub.StreamObserver<astaOnlineProto.AstaOnLine.MessaggioGenerico>) responseObserver);
           break;
         default:
