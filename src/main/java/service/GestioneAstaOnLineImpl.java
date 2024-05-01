@@ -213,37 +213,51 @@ public class GestioneAstaOnLineImpl extends AstaServiceImplBase {
                    responseObserver.onNext(errore);
                    responseObserver.onCompleted();
                } else {
-                   // Altrimenti, aggiorna il prezzo dell'articolo nel database con il nuovo prezzo proposto
-                   String updateQuery = "UPDATE prodotti SET prezzo = ? WHERE id = ?";
-                   PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
-                   updateStatement.setFloat(1, request.getValoreOfferta());
-                   updateStatement.setInt(2, request.getArticoloId());
-                   updateStatement.executeUpdate();
-                   query = "SELECT id_cliente FROM clienti WHERE email = ?";
-                   try (PreparedStatement selectStatement = connection.prepareStatement(query)) {
-                	   selectStatement.setString(1, request.getEmailUser());
-                       ResultSet resultSelectSet = selectStatement.executeQuery();
+            	   String checkProductQuery = "SELECT * FROM prodotto_venduto WHERE ID = ?";
+                   try (PreparedStatement checkStatement = connection.prepareStatement(checkProductQuery)) {
+                       checkStatement.setInt(1, request.getArticoloId());
+                       ResultSet checkResultSet = checkStatement.executeQuery();
 
-                       if (resultSelectSet.next()) {
-                           int idCliente = resultSelectSet.getInt("id_cliente");
-                           
-                           // Inserimento dell'offerta nella tabella Offerta
-                           String insertQuery = "INSERT INTO Offerta (ID_cliente, ID_prodotto, prezzo) VALUES (?, ?, ?)";
-                           try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
-                               insertStatement.setInt(1, idCliente);
-                               insertStatement.setInt(2, request.getArticoloId());
-                               insertStatement.setFloat(3, request.getValoreOfferta());
-                               insertStatement.executeUpdate();
-                               
-                               publisher.subscribe(request.getArticoloId(), idCliente);
-                               publisher.inserisciMessaggioOfferta(idCliente, request.getArticoloId(), request.getValoreOfferta());
-
-                               // Invia un messaggio di conferma al client
-                               MessaggioGenerico conferma = MessaggioGenerico.newBuilder()
-                                   .setMessaggio("SUCCESSO - Offerta inserita con successo.")
+                       if (checkResultSet.next()) {
+                           // Se l'ID del prodotto è già venduto, restituisci un messaggio di errore
+                           MessaggioGenerico errore = MessaggioGenerico.newBuilder()
+                                   .setMessaggio("ERRORE - L'asta di questo prodotto risulta conclusa")
                                    .build();
-                               responseObserver.onNext(conferma);
-                               responseObserver.onCompleted();
+                           responseObserver.onNext(errore);
+                           responseObserver.onCompleted();
+                       } else {
+                    	   String updateQuery = "UPDATE prodotti SET prezzo = ? WHERE id = ?";
+                           PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
+                           updateStatement.setFloat(1, request.getValoreOfferta());
+                           updateStatement.setInt(2, request.getArticoloId());
+                           updateStatement.executeUpdate();
+                           query = "SELECT id_cliente FROM clienti WHERE email = ?";
+                           try (PreparedStatement selectStatement = connection.prepareStatement(query)) {
+                        	   selectStatement.setString(1, request.getEmailUser());
+                               ResultSet resultSelectSet = selectStatement.executeQuery();
+
+                               if (resultSelectSet.next()) {
+                                   int idCliente = resultSelectSet.getInt("id_cliente");
+                                   
+                                   // Inserimento dell'offerta nella tabella Offerta
+                                   String insertQuery = "INSERT INTO Offerta (ID_cliente, ID_prodotto, prezzo) VALUES (?, ?, ?)";
+                                   try (PreparedStatement insertStatement = connection.prepareStatement(insertQuery)) {
+                                       insertStatement.setInt(1, idCliente);
+                                       insertStatement.setInt(2, request.getArticoloId());
+                                       insertStatement.setFloat(3, request.getValoreOfferta());
+                                       insertStatement.executeUpdate();
+                                       
+                                       publisher.subscribe(request.getArticoloId(), idCliente);
+                                       publisher.inserisciMessaggioOfferta(idCliente, request.getArticoloId(), request.getValoreOfferta());
+
+                                       // Invia un messaggio di conferma al client
+                                       MessaggioGenerico conferma = MessaggioGenerico.newBuilder()
+                                           .setMessaggio("SUCCESSO - Offerta inserita con successo.")
+                                           .build();
+                                       responseObserver.onNext(conferma);
+                                       responseObserver.onCompleted();
+                                   }
+                               }                       
                            }
                        }
                    }

@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import utils.SqlQuery;
+
 public class PannelloVisualizzaMessaggi extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -31,6 +33,8 @@ public class PannelloVisualizzaMessaggi extends JPanel {
         messageArea = new JTextArea(10, 20); // 10 righe, 20 colonne iniziali
         messageArea.setEditable(false); // Non modificabile dall'utente
 
+        addMessage();
+        
         // Creazione del pannello di scorrimento per l'area di testo
         scrollPane = new JScrollPane(messageArea);
         gbc.gridy = 1;
@@ -42,8 +46,11 @@ public class PannelloVisualizzaMessaggi extends JPanel {
         //NewsMessage.aff
     }
 	
-    private void addMessage(String message) {
-        messageArea.append(message + "\n");
-        messageArea.setCaretPosition(messageArea.getDocument().getLength());
+    private void addMessage() {
+    	String[] messages = SqlQuery.getNotifiche();
+    	for(String message : messages) {
+            messageArea.append(message + "\n");
+            messageArea.setCaretPosition(messageArea.getDocument().getLength());
+    	}
     }
 }

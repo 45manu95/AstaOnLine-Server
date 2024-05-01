@@ -37,7 +37,12 @@
         <artifactId>mysql-connector-java</artifactId>
         <version>8.0.28</version>
     </dependency>
-	</dependencies>
+    <dependency>
+    	<groupId>com.provaGrpc</groupId>
+    	<artifactId>grpcProva1</artifactId>
+    	<version>0.0.1-SNAPSHOT</version>
+    </dependency>
+   </dependencies>
 
 		<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

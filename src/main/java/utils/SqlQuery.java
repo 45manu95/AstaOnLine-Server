@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -139,6 +142,14 @@ public class SqlQuery {
                     		try (ResultSet resultSet1 = preparedStatement1.executeQuery()) {
                     			if (resultSet1.next()) {
                     				clientId = resultSet1.getInt("ID_cliente");
+                    		        query = "INSERT INTO prodotto_venduto (ID, acquirente) VALUES (?, ?)";
+                    		        try(PreparedStatement preparedStatement11 = connection.prepareStatement(query)) {
+                    		            
+                    		            preparedStatement11.setInt(1, articolo_id);
+                    		            preparedStatement11.setInt(2, clientId);
+                    		            
+                    		            preparedStatement11.executeUpdate();
+                    		        }
                     			}
                     		}
                     	}
@@ -151,5 +162,63 @@ public class SqlQuery {
         }
 		return clientId;
 	}
+	
+	public static int inserisciNotifica(int id_prodotto, String testo) {
+		String query = "INSERT INTO notifica (ID_prodotto, testo) VALUES (?, ?)";
+		PreparedStatement preparedStatement;
+		int id_notifica = -1;
+		try {
+			preparedStatement = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+			preparedStatement.setInt(1, id_prodotto);
+	        preparedStatement.setString(2, testo);
+	        preparedStatement.executeUpdate();
+	        System.out.println("Notifica inserita con successo nella tabella notifica.");
+	        ResultSet rs = preparedStatement.getGeneratedKeys();
+	        if (rs.next()) {
+	        	id_notifica = rs.getInt(1); 
+	        } else {
+	            System.out.println("Impossibile ottenere l'ID della notifica inserita.");
+	        }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}   
+		return id_notifica;
+	}
+	
+	public static void inserisciRicezione(int id_notifica, int id_cliente, int id_articolo) {
+		String query = "INSERT INTO ricezione (ID_cliente, ID_notifica, ID_prodotto) VALUES (?, ?, ?)";
+	    PreparedStatement preparedStatement;
+	    try {
+	        preparedStatement = connection.prepareStatement(query);
+	        preparedStatement.setInt(1, id_cliente);
+	        preparedStatement.setInt(2, id_notifica);
+	        preparedStatement.setInt(3, id_articolo);
+	        preparedStatement.executeUpdate();
 
+	        System.out.println("Ricezione inserita con successo nella tabella ricezione.");
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public static String[] getNotifiche() {
+        List<String> notifiche = new ArrayList<>();
+        
+        String query = "SELECT * FROM notifica";
+        
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            
+            while (resultSet.next()) {
+                String testo = resultSet.getString("testo");
+                notifiche.add(testo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Errore durante il recupero delle notifiche dalla tabella Notifica.");
+        }
+        
+        // Converte la lista di stringhe in un array di stringhe
+        return notifiche.toArray(new String[0]);
+    }
 }

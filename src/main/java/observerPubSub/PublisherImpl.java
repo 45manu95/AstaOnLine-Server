@@ -1,5 +1,7 @@
 package observerPubSub;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -37,13 +39,23 @@ public class PublisherImpl implements Publisher {
     		messaggiArticoli.put(articolo_id, messages);
         }   		
 	}
+	
+	/**
+	 * Il seguente metodo viene utilizzato per eliminare dalla struttura dati
+	 * tutti i riferimenti all'articolo e a chi stava seguendo le sue notifiche
+	 * una volta conclusa l'asta. Viene comunque commentato il codice per eliminare
+	 * un singolo utente da un articolo nel caso in cui in futuro viene resa 
+	 * disponibile una funzione secondo cui l'acquirente si disiscrive dall'asta di
+	 * uno specifico oggetto.
+	 */
 
 	@Override
 	public void unsubscribe(int subscriber, int articolo_id) {
 	       if(subscribersArticleMap.containsKey(articolo_id)){
-	        	Set<Integer> subscribers = subscribersArticleMap.get(articolo_id);
-	        	subscribers.remove(subscriber);
-	        	subscribersArticleMap.put(articolo_id, subscribers);
+	    	   	subscribersArticleMap.remove(articolo_id);
+	        	//Set<Integer> subscribers = subscribersArticleMap.get(articolo_id);
+	        	//subscribers.remove(subscriber);
+	        	//subscribersArticleMap.put(articolo_id, subscribers);
 	        }			
 	}
 
@@ -59,10 +71,9 @@ public class PublisherImpl implements Publisher {
 		}
 		return message;
 	}
-		
 
 	public void inserisciMessaggioOfferta(int cliente_id, int articolo_id, float prezzo) {
-		String builder = "Il cliente "+cliente_id+" ha offerto "+prezzo+" euro per articolo "+articolo_id;
+		String builder = ottieniDataCorrente()+" - Il cliente "+cliente_id+" ha offerto "+prezzo+" euro per articolo "+articolo_id;
 		LinkedList<String> messaggi = messaggiArticoli.get(articolo_id);
 		messaggi.add(builder);
 		messaggiArticoli.put(articolo_id, messaggi);
@@ -71,14 +82,15 @@ public class PublisherImpl implements Publisher {
 		for(Semaphore single : sem) {
 			single.release(numUtenti);
 		}
-		//metodo sql che mette il tutto nel database
+		int notifica_id = SqlQuery.inserisciNotifica(articolo_id, builder);
+		SqlQuery.inserisciRicezione(notifica_id, cliente_id, articolo_id);	
 	}
 	
 	public void pubblicaVincitore(int articolo_id) {
 		String builder;
 		int cliente_id = SqlQuery.trovaMaggioreOfferente(articolo_id);
 		if(cliente_id != -1) {
-			builder = "Asta CONCLUSA per il prodotto "+articolo_id+" - Ha vinto il cliente "+cliente_id;
+			builder = ottieniDataCorrente()+" - Asta CONCLUSA per il prodotto "+articolo_id+" - Ha vinto il cliente "+cliente_id;
 			LinkedList<String> messaggi = messaggiArticoli.get(articolo_id);
 			messaggi.add(builder);
 			messaggiArticoli.put(articolo_id, messaggi);
@@ -89,13 +101,18 @@ public class PublisherImpl implements Publisher {
 			}
 		}
 		else {
-			builder = "Asta CONCLUSA per il prodotto "+articolo_id+" - nessun vincitore";
+			builder = ottieniDataCorrente()+" - Asta CONCLUSA per il prodotto "+articolo_id+" - nessun vincitore";
 		}
-		
-		//metodo sql che mette il tutto nel database
-		//metodo sql che mette il prodotto in prodotto finito
-		//metodo che non fa inviare offerte dopo che l'asta risulta conclusa
-		//ogni volta che si invoca il dispose su finestraHome si chiude tutto (errore thread) e magari i thread si resettano
-		//i messaggi al invio della offerta vengono aggiunti ai vecchi replicandoli, magari resettare prima
+		int notifica_id = SqlQuery.inserisciNotifica(articolo_id, builder);
+		SqlQuery.inserisciRicezione(notifica_id, cliente_id, articolo_id);
+		this.unsubscribe(-1, articolo_id);
 	}
+	
+	private String ottieniDataCorrente() {
+		Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(calendar.getTime());
+	}
+	
+	
 }
