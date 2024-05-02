@@ -17,6 +17,9 @@ import astaOnlineProto.AstaOnLine.Articoli;
 import astaOnlineProto.AstaOnLine.Articolo;
 import singleton.StartMySQL;
 
+/**
+ * Serie di metodi per manipolare persistenza dati database MySQL
+ */
 public class SqlQuery {
 	private static Connection connection = StartMySQL.getInstance();
 	

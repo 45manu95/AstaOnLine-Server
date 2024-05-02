@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * DESIGN PATTERN SINGLETON
+ * Utilizzato per avere una sola istanza globale di strutture dati e metodi per accedervi
+ */
 public class StartMySQL {
    private static Connection instance;
 

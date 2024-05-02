@@ -50,18 +50,23 @@ public class PannelloProdottiNonVenduti extends JPanel {
             new Thread(() -> {
             	
                 List<Articolo> products = SqlQuery.visualizzaArticoliNonVenduti();
+    
                 SwingUtilities.invokeLater(() -> {
+	                
 	                showProducts.setLayout(new GridLayout(0, 3));
-                    for (Articolo product : products) {
-                    	ProductPanel productPanel = new ProductPanel(product);
-                        showProducts.add(productPanel);
-                    }
-                    remove(centralInfo);
-                    setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-                    JScrollPane scrollPane = new JScrollPane(showProducts);
-                    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-	                add(scrollPane, gbc);
-                    revalidate(); 
+	                if(products.size() != 0) {
+	                	for (Articolo product : products) {
+	                    	ProductPanel productPanel = new ProductPanel(product);
+	                        showProducts.add(productPanel);
+	                    }
+	                    remove(centralInfo);
+	                    setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+	                    JScrollPane scrollPane = new JScrollPane(showProducts);
+	                    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		                add(scrollPane, gbc);
+	                    revalidate(); 
+	                }
+                    info.setText("Nessun elemento da visualizzare");
                 });
             }).start();
         }

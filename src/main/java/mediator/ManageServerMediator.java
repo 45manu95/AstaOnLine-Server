@@ -6,6 +6,12 @@ import io.grpc.Server;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
+/**
+ * DESIGN PATTERN MEDIATOR
+ * Per incapsulare il modo in si interagisce per accedere al sistema. 
+ * In questo caso come struttura generale questa classe corrisponde a Mediator1,
+ * il quale implementa la sua interfaccia Mediator
+ */
 public class ManageServerMediator implements Mediator {
    private JTextField start;
    private JTextField close;

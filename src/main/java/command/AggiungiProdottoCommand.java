@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.net.SocketTimeoutException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,6 +23,13 @@ import javax.swing.JPanel;
 import observerPubSub.PublisherImpl;
 import singleton.StartMySQL;
 
+/**
+ * DESIGN PATTERN COMMAND
+ * Questa classe rappresenta nella struttura generale il ConcreteCommand, la quale
+ * va ad implementare l'interfaccia che nella struttura generale si riferisce al
+ * Command (ActionListener). L'invoker in questo caso risulta rappresentato 
+ * dal Mediator corrispondente.
+ */
 public class AggiungiProdottoCommand implements ActionListener {
    private Connection connection = StartMySQL.getInstance();
    private JFrame frameMessage;
@@ -122,6 +128,12 @@ public class AggiungiProdottoCommand implements ActionListener {
       this.frameMessage.pack();
    }
    
+   /**
+    * Una volta ottenuto l'id nel nuovo articolo inserito nel database
+    * viene avviato un nuovo Thread per gestire il timer di fine asta articolo.
+    * Al tempo scaduto si invoca il metodo per sapere chi ha vinto e notificarlo a 
+    * tutti i partecipanti all'asta
+    */
    private void avviaTimer() {
 	   int articolo = 0;
 	   String queryId = "SELECT id FROM prodotti ORDER BY id DESC LIMIT 1";

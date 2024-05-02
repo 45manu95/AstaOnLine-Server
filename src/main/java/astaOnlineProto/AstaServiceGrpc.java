@@ -91,38 +91,6 @@ public final class AstaServiceGrpc {
      return getAccediUtenteMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<astaOnlineProto.AstaOnLine.Empty,
-      astaOnlineProto.AstaOnLine.MessaggioGenerico> getNotificaSuccessoMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "NotificaSuccesso",
-      requestType = astaOnlineProto.AstaOnLine.Empty.class,
-      responseType = astaOnlineProto.AstaOnLine.MessaggioGenerico.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<astaOnlineProto.AstaOnLine.Empty,
-      astaOnlineProto.AstaOnLine.MessaggioGenerico> getNotificaSuccessoMethod() {
-    io.grpc.MethodDescriptor<astaOnlineProto.AstaOnLine.Empty, astaOnlineProto.AstaOnLine.MessaggioGenerico> getNotificaSuccessoMethod;
-    if ((getNotificaSuccessoMethod = AstaServiceGrpc.getNotificaSuccessoMethod) == null) {
-      synchronized (AstaServiceGrpc.class) {
-        if ((getNotificaSuccessoMethod = AstaServiceGrpc.getNotificaSuccessoMethod) == null) {
-          AstaServiceGrpc.getNotificaSuccessoMethod = getNotificaSuccessoMethod = 
-              io.grpc.MethodDescriptor.<astaOnlineProto.AstaOnLine.Empty, astaOnlineProto.AstaOnLine.MessaggioGenerico>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(
-                  "AstaService", "NotificaSuccesso"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  astaOnlineProto.AstaOnLine.Empty.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  astaOnlineProto.AstaOnLine.MessaggioGenerico.getDefaultInstance()))
-                  .setSchemaDescriptor(new AstaServiceMethodDescriptorSupplier("NotificaSuccesso"))
-                  .build();
-          }
-        }
-     }
-     return getNotificaSuccessoMethod;
-  }
-
   private static volatile io.grpc.MethodDescriptor<astaOnlineProto.AstaOnLine.Utente,
       astaOnlineProto.AstaOnLine.Articoli> getVisualizzaArticoliAcquistatiMethod;
 
@@ -326,13 +294,6 @@ public final class AstaServiceGrpc {
 
     /**
      */
-    public void notificaSuccesso(astaOnlineProto.AstaOnLine.Empty request,
-        io.grpc.stub.StreamObserver<astaOnlineProto.AstaOnLine.MessaggioGenerico> responseObserver) {
-      asyncUnimplementedUnaryCall(getNotificaSuccessoMethod(), responseObserver);
-    }
-
-    /**
-     */
     public void visualizzaArticoliAcquistati(astaOnlineProto.AstaOnLine.Utente request,
         io.grpc.stub.StreamObserver<astaOnlineProto.AstaOnLine.Articoli> responseObserver) {
       asyncUnimplementedUnaryCall(getVisualizzaArticoliAcquistatiMethod(), responseObserver);
@@ -382,13 +343,6 @@ public final class AstaServiceGrpc {
                 astaOnlineProto.AstaOnLine.Utente,
                 astaOnlineProto.AstaOnLine.MessaggioGenerico>(
                   this, METHODID_ACCEDI_UTENTE)))
-          .addMethod(
-            getNotificaSuccessoMethod(),
-            asyncUnaryCall(
-              new MethodHandlers<
-                astaOnlineProto.AstaOnLine.Empty,
-                astaOnlineProto.AstaOnLine.MessaggioGenerico>(
-                  this, METHODID_NOTIFICA_SUCCESSO)))
           .addMethod(
             getVisualizzaArticoliAcquistatiMethod(),
             asyncUnaryCall(
@@ -460,14 +414,6 @@ public final class AstaServiceGrpc {
         io.grpc.stub.StreamObserver<astaOnlineProto.AstaOnLine.MessaggioGenerico> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getAccediUtenteMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     */
-    public void notificaSuccesso(astaOnlineProto.AstaOnLine.Empty request,
-        io.grpc.stub.StreamObserver<astaOnlineProto.AstaOnLine.MessaggioGenerico> responseObserver) {
-      asyncUnaryCall(
-          getChannel().newCall(getNotificaSuccessoMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -545,13 +491,6 @@ public final class AstaServiceGrpc {
 
     /**
      */
-    public astaOnlineProto.AstaOnLine.MessaggioGenerico notificaSuccesso(astaOnlineProto.AstaOnLine.Empty request) {
-      return blockingUnaryCall(
-          getChannel(), getNotificaSuccessoMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
     public astaOnlineProto.AstaOnLine.Articoli visualizzaArticoliAcquistati(astaOnlineProto.AstaOnLine.Utente request) {
       return blockingUnaryCall(
           getChannel(), getVisualizzaArticoliAcquistatiMethod(), getCallOptions(), request);
@@ -622,14 +561,6 @@ public final class AstaServiceGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<astaOnlineProto.AstaOnLine.MessaggioGenerico> notificaSuccesso(
-        astaOnlineProto.AstaOnLine.Empty request) {
-      return futureUnaryCall(
-          getChannel().newCall(getNotificaSuccessoMethod(), getCallOptions()), request);
-    }
-
-    /**
-     */
     public com.google.common.util.concurrent.ListenableFuture<astaOnlineProto.AstaOnLine.Articoli> visualizzaArticoliAcquistati(
         astaOnlineProto.AstaOnLine.Utente request) {
       return futureUnaryCall(
@@ -671,12 +602,11 @@ public final class AstaServiceGrpc {
 
   private static final int METHODID_REGISTRA_UTENTE = 0;
   private static final int METHODID_ACCEDI_UTENTE = 1;
-  private static final int METHODID_NOTIFICA_SUCCESSO = 2;
-  private static final int METHODID_VISUALIZZA_ARTICOLI_ACQUISTATI = 3;
-  private static final int METHODID_VISUALIZZA_ARTICOLI_REGISTRATI = 4;
-  private static final int METHODID_INVIA_OFFERTA = 5;
-  private static final int METHODID_GET_ARTICOLI_IN_VENDITA = 6;
-  private static final int METHODID_RICEVI_NOTIFICHE = 7;
+  private static final int METHODID_VISUALIZZA_ARTICOLI_ACQUISTATI = 2;
+  private static final int METHODID_VISUALIZZA_ARTICOLI_REGISTRATI = 3;
+  private static final int METHODID_INVIA_OFFERTA = 4;
+  private static final int METHODID_GET_ARTICOLI_IN_VENDITA = 5;
+  private static final int METHODID_RICEVI_NOTIFICHE = 6;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -701,10 +631,6 @@ public final class AstaServiceGrpc {
           break;
         case METHODID_ACCEDI_UTENTE:
           serviceImpl.accediUtente((astaOnlineProto.AstaOnLine.Utente) request,
-              (io.grpc.stub.StreamObserver<astaOnlineProto.AstaOnLine.MessaggioGenerico>) responseObserver);
-          break;
-        case METHODID_NOTIFICA_SUCCESSO:
-          serviceImpl.notificaSuccesso((astaOnlineProto.AstaOnLine.Empty) request,
               (io.grpc.stub.StreamObserver<astaOnlineProto.AstaOnLine.MessaggioGenerico>) responseObserver);
           break;
         case METHODID_VISUALIZZA_ARTICOLI_ACQUISTATI:
@@ -790,7 +716,6 @@ public final class AstaServiceGrpc {
               .setSchemaDescriptor(new AstaServiceFileDescriptorSupplier())
               .addMethod(getRegistraUtenteMethod())
               .addMethod(getAccediUtenteMethod())
-              .addMethod(getNotificaSuccessoMethod())
               .addMethod(getVisualizzaArticoliAcquistatiMethod())
               .addMethod(getVisualizzaArticoliRegistratiMethod())
               .addMethod(getInviaOffertaMethod())

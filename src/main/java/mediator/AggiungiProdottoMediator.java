@@ -1,4 +1,4 @@
-    package mediator;
+package mediator;
 
 import command.AggiungiProdottoCommand;
 import java.awt.Component;
@@ -13,6 +13,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+/**
+ * DESIGN PATTERN MEDIATOR
+ * Per incapsulare il modo in si interagisce per accedere al sistema. 
+ * Viene disaccoppiata l'azione dalla sua rappresentazione grafica e per dare
+ * anche qualche controllata sulle informazioni passate al server
+ * In questo caso come struttura generale questa classe corrisponde a Mediator1,
+ * il quale implementa la sua interfaccia Mediator
+ */
 public class AggiungiProdottoMediator implements Mediator {
    private JFrame frameError = new JFrame();
    private JButton invioProdotto;

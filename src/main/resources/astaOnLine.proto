@@ -48,8 +48,6 @@ service AstaService {
 
   rpc AccediUtente (Utente) returns (MessaggioGenerico);
 
-  rpc NotificaSuccesso (Empty) returns (MessaggioGenerico);
-
   rpc VisualizzaArticoliAcquistati (Utente) returns (Articoli);
 
   rpc VisualizzaArticoliRegistrati (Utente) returns (Articoli);

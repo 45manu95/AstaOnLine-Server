@@ -5343,17 +5343,16 @@ public final class AstaOnLine {
       "(\t\"\007\n\005Empty\"\'\n\010Articoli\022\033\n\010articoli\030\001 \003(" +
       "\0132\t.Articolo\"F\n\020ArticoloNotifica\022\025\n\rinde" +
       "xNotifica\030\001 \001(\005\022\033\n\010articolo\030\002 \001(\0132\t.Arti" +
-      "colo2\224\003\n\013AstaService\022-\n\016RegistraUtente\022\007" +
+      "colo2\344\002\n\013AstaService\022-\n\016RegistraUtente\022\007" +
       ".Utente\032\022.MessaggioGenerico\022+\n\014AccediUte" +
-      "nte\022\007.Utente\032\022.MessaggioGenerico\022.\n\020Noti" +
-      "ficaSuccesso\022\006.Empty\032\022.MessaggioGenerico" +
-      "\0222\n\034VisualizzaArticoliAcquistati\022\007.Utent" +
-      "e\032\t.Articoli\0222\n\034VisualizzaArticoliRegist" +
-      "rati\022\007.Utente\032\t.Articoli\022,\n\014InviaOfferta" +
-      "\022\010.Offerta\032\022.MessaggioGenerico\022)\n\024GetArt" +
-      "icoliInVendita\022\006.Empty\032\t.Articoli\0228\n\017Ric" +
-      "eviNotifiche\022\021.ArticoloNotifica\032\022.Messag" +
-      "gioGenericoB\021\n\017astaOnlineProtob\006proto3"
+      "nte\022\007.Utente\032\022.MessaggioGenerico\0222\n\034Visu" +
+      "alizzaArticoliAcquistati\022\007.Utente\032\t.Arti" +
+      "coli\0222\n\034VisualizzaArticoliRegistrati\022\007.U" +
+      "tente\032\t.Articoli\022,\n\014InviaOfferta\022\010.Offer" +
+      "ta\032\022.MessaggioGenerico\022)\n\024GetArticoliInV" +
+      "endita\022\006.Empty\032\t.Articoli\0228\n\017RiceviNotif" +
+      "iche\022\021.ArticoloNotifica\032\022.MessaggioGener" +
+      "icoB\021\n\017astaOnlineProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

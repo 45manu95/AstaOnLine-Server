@@ -18,7 +18,6 @@ import astaOnlineProto.AstaOnLine.Articolo;
 import utils.SqlQuery;
 
 public class PannelloProdottiVendita extends JPanel{
-	private final int ID = 1; //questo ID serve per dire che dal proxy si vogliono ottenere oggetti in vendita
 
 	private static final long serialVersionUID = 1L;
 	
@@ -52,19 +51,21 @@ public class PannelloProdottiVendita extends JPanel{
             	
             	
                 List<Articolo> products = SqlQuery.visualizzaArticoli();
-                SwingUtilities.invokeLater(() -> {
-	                
+                SwingUtilities.invokeLater(() -> {     
 	                showProducts.setLayout(new GridLayout(0, 3));
-                    for (Articolo product : products) {
-                    	ProductPanel productPanel = new ProductPanel(product);
-                        showProducts.add(productPanel);
-                    }
-                    remove(centralInfo);
-                    setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-                    JScrollPane scrollPane = new JScrollPane(showProducts);
-                    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-	                add(scrollPane, gbc);
-                    revalidate(); 
+	                if(products.size() != 0) {
+	                	for (Articolo product : products) {
+	                    	ProductPanel productPanel = new ProductPanel(product);
+	                        showProducts.add(productPanel);
+	                    }
+	                    remove(centralInfo);
+	                    setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+	                    JScrollPane scrollPane = new JScrollPane(showProducts);
+	                    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		                add(scrollPane, gbc);
+	                    revalidate(); 
+	                }
+                    info.setText("Nessun elemento da visualizzare");
                 });
             }).start();
         }

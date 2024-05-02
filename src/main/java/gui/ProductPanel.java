@@ -99,7 +99,6 @@ public class ProductPanel extends JPanel {
 	 * per il motivo secondo il quale nel momento in cui si chiudeva la schermata di
 	 * descrizione del prodotto veniva invocato il dispose anche su quegli oggetti di riferimento
 	 * e quindi scomparivano anche dalla schermata di visualizzazione dei prodotti in vendita (usciva un riquadro bianco)
-	 * @see title
 	 */
 	
 	private class ShowProduct extends JFrame {

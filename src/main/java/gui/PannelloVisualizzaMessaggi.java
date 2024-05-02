@@ -11,6 +11,11 @@ import javax.swing.JTextArea;
 
 import utils.SqlQuery;
 
+/**
+ * Vengono visualizzati tutti i messaggi relativi a tutte le notifiche inviate per ogni
+ * prodotto. L'amministratore del server ha una visione globale di tutte le notifiche
+ * generate
+ */
 public class PannelloVisualizzaMessaggi extends JPanel {
 
 	private static final long serialVersionUID = 1L;
