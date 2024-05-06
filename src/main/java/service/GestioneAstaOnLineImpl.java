@@ -210,7 +210,6 @@ public class GestioneAstaOnLineImpl extends AstaServiceImplBase {
                    responseObserver.onNext(errore);
                    responseObserver.onCompleted();
                } else {
-            	   synchronized (this) {
             		   String checkProductQuery = "SELECT * FROM prodotto_venduto WHERE ID = ?";
                        try (PreparedStatement checkStatement = connection.prepareStatement(checkProductQuery)) {
                            checkStatement.setInt(1, request.getArticoloId());
@@ -259,7 +258,7 @@ public class GestioneAstaOnLineImpl extends AstaServiceImplBase {
                                }
                            }
                        }
-            	   }
+            	   
                }
            } 
        }

@@ -25,7 +25,7 @@ public class SqlQuery {
 	
 	public static List<Articolo> visualizzaArticoli() {
 		LinkedList<Articolo> listaArticoli = new LinkedList<Articolo>();
-		   String query = "SELECT p.* FROM prodotti p LEFT JOIN prodotto_venduto pv ON p.id = pv.ID WHERE pv.ID IS NULL AND p.data_fine < CURRENT_DATE()";
+		   String query = "SELECT p.* FROM prodotti p LEFT JOIN prodotto_venduto pv ON p.id = pv.ID WHERE pv.ID IS NULL AND p.data_fine > CURRENT_DATE()";
 	       try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 	           ResultSet resultSet = preparedStatement.executeQuery();
 

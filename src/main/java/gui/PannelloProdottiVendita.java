@@ -65,7 +65,9 @@ public class PannelloProdottiVendita extends JPanel{
 		                add(scrollPane, gbc);
 	                    revalidate(); 
 	                }
-                    info.setText("Nessun elemento da visualizzare");
+	                else {
+	                    info.setText("Nessun elemento da visualizzare");
+	                }
                 });
             }).start();
         }

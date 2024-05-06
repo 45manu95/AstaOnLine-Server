@@ -27,14 +27,11 @@ public class PublisherImpl implements Publisher {
 	private static Map<Integer, LinkedList<Semaphore>> attendiNotifica = new HashMap<Integer,LinkedList<Semaphore>>();
 	//lista messaggi in arrivo
 	private static Map<Integer, LinkedList<String>> messaggiArticoli = new HashMap<Integer, LinkedList<String>>();
-	
-	//oggetto utilizzato per garantire concorrenza nell'accesso alle chiamate
-    private static final Object lock = new Object();
 
 
 	@Override
 	public void subscribe(int articolo_id,int subscriber) {
-        synchronized (lock) {
+        synchronized (subscribersArticleMap) {
         	if(subscribersArticleMap.containsKey(articolo_id)){
         		Set<Integer> subscribers = subscribersArticleMap.get(articolo_id);
         		if(!subscribers.contains(subscriber)) {
@@ -66,7 +63,7 @@ public class PublisherImpl implements Publisher {
 	 */
 	@Override
 	public void unsubscribe(int subscriber, int articolo_id) {
-        synchronized (lock) {
+        synchronized (subscribersArticleMap) {
  	       if(subscribersArticleMap.containsKey(articolo_id)){
 	    	   	subscribersArticleMap.remove(articolo_id);
 	        	//Set<Integer> subscribers = subscribersArticleMap.get(articolo_id);
@@ -88,8 +85,7 @@ public class PublisherImpl implements Publisher {
 	 */
 	@Override
 	public String notifySubscribers(int indexNotifica,int articolo_id) throws InterruptedException {
-        synchronized (lock) {
-    		String message = "";
+   		String message = "";
     		LinkedList<Semaphore> sem = attendiNotifica.get(articolo_id);
     		sem.get(indexNotifica).acquire();
     		//problema il nuovo client parte da 0 come index
@@ -99,7 +95,7 @@ public class PublisherImpl implements Publisher {
     			attendiNotifica.get(articolo_id).add(new Semaphore(0));
     		}
     		return message;
-        }
+        
 	}
 
 	/**
@@ -111,7 +107,7 @@ public class PublisherImpl implements Publisher {
 	 * @param prezzo
 	 */
 	public void inserisciMessaggioOfferta(int cliente_id, int articolo_id, float prezzo) {
-        synchronized (lock) {
+        synchronized (subscribersArticleMap) {
     		String builder = ottieniDataCorrente()+" - Il cliente "+cliente_id+" ha offerto "+prezzo+" euro per articolo "+articolo_id;
     		LinkedList<String> messaggi = messaggiArticoli.get(articolo_id);
     		messaggi.add(builder);
@@ -131,7 +127,6 @@ public class PublisherImpl implements Publisher {
 	 * @param articolo_id
 	 */
 	public void pubblicaVincitore(int articolo_id) {
-        synchronized (lock) {
     		String builder;
     		int cliente_id = SqlQuery.trovaMaggioreOfferente(articolo_id);
     		if(cliente_id != -1) {
@@ -151,7 +146,7 @@ public class PublisherImpl implements Publisher {
     		int notifica_id = SqlQuery.inserisciNotifica(articolo_id, builder);
     		SqlQuery.inserisciRicezione(notifica_id, cliente_id, articolo_id);
     		this.unsubscribe(-1, articolo_id);
-        }
+        
 	}
 		
 	private String ottieniDataCorrente() {
